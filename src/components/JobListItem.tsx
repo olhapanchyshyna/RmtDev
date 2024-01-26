@@ -1,14 +1,5 @@
+import { JobItems } from '../lib/types'
 import BookmarkIcon from "./BookmarkIcon";
-
-type JobItems = {
-  id: number;
-  badgeLetters: string;
-  title: string;
-  company: string;
-  date: string;
-  relevanceScore: number;
-  daysAgo: number;
-}
 
 type JobListItemProps = {
   jobItems : JobItems
