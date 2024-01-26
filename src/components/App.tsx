@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import {useState } from 'react'
 import Background from './Background'
 import BookmarksButton from './BookmarksButton'
 import Container from './Container'
@@ -12,31 +12,11 @@ import ResultsCount from './ResultsCount'
 import SearchForm from './SearchForm'
 import Sidebar, { SidebarTop } from './Sidebar'
 import SortingControls from './SortingControls'
+import { useJobItems } from '../lib/hooks'
 
 function App() {
 	const [searchText, setSearchText] = useState('')
-	const [jobItems, setjobItems] = useState([])
-  const [isLoadding, setIsLoadding] = useState(false)
-
-	useEffect(() => {
-		if (!searchText) return
-
-		const fetchData = async () => {
-      setIsLoadding(true)
-			try {
-				const response = await fetch(
-					`https://bytegrad.com/course-assets/projects/rmtdev/api/data?search=${searchText}`
-				)
-				const data = await response.json()
-				setjobItems(data.jobItems)
-			} catch (error) {
-				console.log(error)
-			}
-      setIsLoadding(false)
-		}
-		fetchData()
-    
-	}, [searchText])
+	const{jobItems, isLoadding} = useJobItems(searchText)
 
 	return (
 		<>
