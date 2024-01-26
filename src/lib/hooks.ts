@@ -4,6 +4,8 @@ export function useJobItems(searchText: string) {
 	const [jobItems, setjobItems] = useState([])
   const [isLoadding, setIsLoadding] = useState(false)
 
+	const jobItemsSliced = jobItems.slice(0,7)
+
 	useEffect(() => {
 		if (!searchText) return
 
@@ -25,7 +27,7 @@ export function useJobItems(searchText: string) {
 	}, [searchText])
 
 	return{
-		jobItems,
+		jobItemsSliced,
 		isLoadding
 	}
 }
