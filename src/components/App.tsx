@@ -1,4 +1,5 @@
-import {useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useJobItems } from '../lib/hooks'
 import Background from './Background'
 import BookmarksButton from './BookmarksButton'
 import Container from './Container'
@@ -12,11 +13,25 @@ import ResultsCount from './ResultsCount'
 import SearchForm from './SearchForm'
 import Sidebar, { SidebarTop } from './Sidebar'
 import SortingControls from './SortingControls'
-import { useJobItems } from '../lib/hooks'
 
 function App() {
 	const [searchText, setSearchText] = useState('')
-	const{jobItemsSliced, isLoadding} = useJobItems(searchText)
+	const { jobItems, isLoadding } = useJobItems(searchText)
+  const [activeId, setActiveId] = useState<number | null>(null)
+
+	useEffect(() => {
+		const handleHashChange = () => {
+      const id = +window.location.hash.slice(1);
+      setActiveId(id)
+    };
+    handleHashChange()
+
+    window.addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+	}, [])
 
 	return (
 		<>
@@ -37,7 +52,7 @@ function App() {
 						<ResultsCount />
 						<SortingControls />
 					</SidebarTop>
-					<JobList jobItems={jobItemsSliced} isLoadding={isLoadding}/>
+					<JobList jobItems={jobItems} isLoadding={isLoadding} />
 					<PaginationControls />
 				</Sidebar>
 				<JobItemContent />

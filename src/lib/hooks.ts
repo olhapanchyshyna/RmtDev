@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
+import { JobItems } from './types'
 
 export function useJobItems(searchText: string) {
-	const [jobItems, setjobItems] = useState([])
+	const [jobItems, setjobItems] = useState<JobItems[]>([])
   const [isLoadding, setIsLoadding] = useState(false)
 
 	const jobItemsSliced = jobItems.slice(0,7)
@@ -27,7 +28,7 @@ export function useJobItems(searchText: string) {
 	}, [searchText])
 
 	return{
-		jobItemsSliced,
+		jobItems: jobItemsSliced,
 		isLoadding
 	}
 }
