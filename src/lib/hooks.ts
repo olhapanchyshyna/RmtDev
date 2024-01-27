@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { JobItems, TJobItemContent } from './types'
 import { BASE_API_URL } from './constants'
+import { JobItems, TJobItemContent } from './types'
 
 export function useActiveId(){
 	const [activeId, setActiveId] = useState<number | null>(null)
@@ -25,24 +25,30 @@ export function useActiveId(){
 export function useJobItemContent(){
 	const activeId = useActiveId()
 	const [jobItemContent, setJobItemContent] = useState<TJobItemContent | null>(null)
+	const [isLoading, setIsLoading] = useState(false)
 
 	useEffect(() => {
 		if (!activeId) return
 
 		const fetchData = async () => {
+			setIsLoading(true)
 			try {
 				const response = await fetch(`${BASE_API_URL}/${activeId}`)
 				const data = await response.json()
         setJobItemContent(data.jobItem)
+				setIsLoading(false)
 			} catch (error) {
         console.log(error)
+				setIsLoading(false)
       }
 		}
-
 		fetchData()
 	}, [activeId])
 
-	return jobItemContent
+	return {
+		jobItemContent,
+		isLoading
+	}
 }
 
 

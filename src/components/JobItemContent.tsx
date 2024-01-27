@@ -1,95 +1,107 @@
 import { useJobItemContent } from '../lib/hooks'
 import BookmarkIcon from './BookmarkIcon'
-
+import Spinner from './Spinner'
 
 export default function JobItemContent() {
-  const jobItemContent = useJobItemContent()
+	const { jobItemContent, isLoading } = useJobItemContent()
 
-	return !jobItemContent ? (
-		<EmptyJobContent />
-	) : (
-    <section className="job-details">
-    <div>
-      <img src={jobItemContent.coverImgURL} alt="#" />
+	if (isLoading) {
+    return <LoadingJobContent />;
+  }
 
-      <a className="apply-btn" href={jobItemContent.companyURL} target="_blank">
-        Apply
-      </a>
+  if (!jobItemContent) {
+    return <EmptyJobContent />;
+  }
 
-      <section className="job-info">
-        <div className="job-info__left">
-          <div className="job-info__badge">{jobItemContent.badgeLetters}</div>
-          <div className="job-info__below-badge">
-            <time className="job-info__time">{jobItemContent.daysAgo}d</time>
+ return (
+		<section className='job-details'>
+			<div>
+				<img src={jobItemContent.coverImgURL} alt='#' />
 
-            <BookmarkIcon/>
-          </div>
-        </div>
+				<a
+					className='apply-btn'
+					href={jobItemContent.companyURL}
+					target='_blank'
+				>
+					Apply
+				</a>
 
-        <div className="job-info__right">
-          <h2 className="second-heading">{jobItemContent.title}</h2>
-          <p className="job-info__company">{jobItemContent.company}</p>
-          <p className="job-info__description">{jobItemContent.description}</p>
-          <div className="job-info__extras">
-            <p className="job-info__extra">
-              <i className="fa-solid fa-clock job-info__extra-icon"></i>
-              {jobItemContent.duration}
-            </p>
-            <p className="job-info__extra">
-              <i className="fa-solid fa-money-bill job-info__extra-icon"></i>
-              {jobItemContent.salary}
-            </p>
-            <p className="job-info__extra">
-              <i className="fa-solid fa-location-dot job-info__extra-icon"></i>{" "}
-              {jobItemContent.location}
-            </p>
-          </div>
-        </div>
-      </section>
+				<section className='job-info'>
+					<div className='job-info__left'>
+						<div className='job-info__badge'>{jobItemContent.badgeLetters}</div>
+						<div className='job-info__below-badge'>
+							<time className='job-info__time'>{jobItemContent.daysAgo}d</time>
 
-      <div className="job-details__other">
-        <section className="qualifications">
-          <div className="qualifications__left">
-            <h4 className="fourth-heading">Qualifications</h4>
-            <p className="qualifications__sub-text">
-              Other qualifications may apply
-            </p>
-          </div>
-          <ul className="qualifications__list">
-            {jobItemContent.qualifications.map((qualification) => (
-              <li key={qualification} className="qualifications__item">
-                {qualification}
-              </li>
-            ))}
-          </ul>
-        </section>
+							<BookmarkIcon />
+						</div>
+					</div>
 
-        <section className="reviews">
-          <div className="reviews__left">
-            <h4 className="fourth-heading">Company reviews</h4>
-            <p className="reviews__sub-text">
-              Recent things people are saying
-            </p>
-          </div>
-          <ul className="reviews__list">
-            {jobItemContent.reviews.map((review) => (
-              <li key={review} className="reviews__item">
-                {review}
-              </li>
-            ))}
-          </ul>
-        </section>
-      </div>
+					<div className='job-info__right'>
+						<h2 className='second-heading'>{jobItemContent.title}</h2>
+						<p className='job-info__company'>{jobItemContent.company}</p>
+						<p className='job-info__description'>
+							{jobItemContent.description}
+						</p>
+						<div className='job-info__extras'>
+							<p className='job-info__extra'>
+								<i className='fa-solid fa-clock job-info__extra-icon'></i>
+								{jobItemContent.duration}
+							</p>
+							<p className='job-info__extra'>
+								<i className='fa-solid fa-money-bill job-info__extra-icon'></i>
+								{jobItemContent.salary}
+							</p>
+							<p className='job-info__extra'>
+								<i className='fa-solid fa-location-dot job-info__extra-icon'></i>{' '}
+								{jobItemContent.location}
+							</p>
+						</div>
+					</div>
+				</section>
 
-      <footer className="job-details__footer">
-        <p className="job-details__footer-text">
-          If possible, please reference that you found the job on{" "}
-          <span className="u-bold">rmtDev</span>, we would really appreciate
-          it!
-        </p>
-      </footer>
-    </div>
-  </section>
+				<div className='job-details__other'>
+					<section className='qualifications'>
+						<div className='qualifications__left'>
+							<h4 className='fourth-heading'>Qualifications</h4>
+							<p className='qualifications__sub-text'>
+								Other qualifications may apply
+							</p>
+						</div>
+						<ul className='qualifications__list'>
+							{jobItemContent.qualifications.map(qualification => (
+								<li key={qualification} className='qualifications__item'>
+									{qualification}
+								</li>
+							))}
+						</ul>
+					</section>
+
+					<section className='reviews'>
+						<div className='reviews__left'>
+							<h4 className='fourth-heading'>Company reviews</h4>
+							<p className='reviews__sub-text'>
+								Recent things people are saying
+							</p>
+						</div>
+						<ul className='reviews__list'>
+							{jobItemContent.reviews.map(review => (
+								<li key={review} className='reviews__item'>
+									{review}
+								</li>
+							))}
+						</ul>
+					</section>
+				</div>
+
+				<footer className='job-details__footer'>
+					<p className='job-details__footer-text'>
+						If possible, please reference that you found the job on{' '}
+						<span className='u-bold'>rmtDev</span>, we would really appreciate
+						it!
+					</p>
+				</footer>
+			</div>
+		</section>
 	)
 }
 
@@ -106,4 +118,14 @@ function EmptyJobContent() {
 			</div>
 		</section>
 	)
+}
+
+function LoadingJobContent() {
+  return (
+    <section className="job-details">
+      <div>
+        <Spinner />
+      </div>
+    </section>
+  );
 }
