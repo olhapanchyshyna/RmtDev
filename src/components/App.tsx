@@ -1,5 +1,5 @@
-import {useState } from 'react'
-import { useActiveId, useJobItems } from '../lib/hooks'
+import { useState } from 'react'
+import { useJobItemContent, useJobItems } from '../lib/hooks'
 import Background from './Background'
 import BookmarksButton from './BookmarksButton'
 import Container from './Container'
@@ -16,9 +16,8 @@ import SortingControls from './SortingControls'
 
 function App() {
 	const [searchText, setSearchText] = useState('')
-	const { jobItems, isLoadding } = useJobItems(searchText)
-  
-  const activeId = useActiveId()
+	const { jobItems, isLoadding } = useJobItems(searchText)  
+  useJobItemContent()
 
 	return (
 		<>
