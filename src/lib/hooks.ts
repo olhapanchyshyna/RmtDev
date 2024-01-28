@@ -36,7 +36,7 @@ const fetchJobItemContent = async(id: number | null): Promise<JobItemContentApiR
 
 export function useJobItemContent(id: number | null) {
 
-	const { data, isLoading } = useQuery(
+	const { data, isInitialLoading } = useQuery(
 		['job-item', id],
 		() => id ? fetchJobItemContent(id) : null,
 		{
@@ -48,6 +48,7 @@ export function useJobItemContent(id: number | null) {
 		}
 	)
 	const jobItemContent = data?.jobItem
+	const isLoading = isInitialLoading
 	return {jobItemContent,isLoading,}
 }
 
