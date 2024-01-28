@@ -30,6 +30,10 @@ export function useActiveId() {
 
 const fetchJobItemContent = async(id: number | null): Promise<JobItemContentApiResponse> => {
 	const response = await fetch(`${BASE_API_URL}/${id}`)
+	if(!response.ok){
+		const errorDate = await response.json()
+		throw new Error(errorDate.description)
+	}
 	const data = await response.json()
 	return data
 }
@@ -44,7 +48,7 @@ export function useJobItemContent(id: number | null) {
 			refetchOnWindowFocus: false,
 			retry: false,
 			enabled: Boolean(id),
-			onError: () => {},
+			onError: (error) => {console.log(error)},
 		}
 	)
 	const jobItemContent = data?.jobItem
