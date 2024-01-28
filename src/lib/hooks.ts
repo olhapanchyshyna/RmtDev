@@ -1,7 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { BASE_API_URL } from './constants'
-import { JobItems } from './types'
+import { JobItems, TJobItemContent } from './types'
+
+type JobItemContentApiResponse = {
+	public: boolean;
+  jobItem: TJobItemContent;
+}
 
 export function useActiveId() {
 	const [activeId, setActiveId] = useState<number | null>(null)
@@ -23,12 +28,11 @@ export function useActiveId() {
 	return activeId
 }
 
-const fetchJobItemContent = async(id: number | null) => {
+const fetchJobItemContent = async(id: number | null): Promise<JobItemContentApiResponse> => {
 	const response = await fetch(`${BASE_API_URL}/${id}`)
 	const data = await response.json()
 	return data
 }
-
 
 export function useJobItemContent(id: number | null) {
 
@@ -43,7 +47,6 @@ export function useJobItemContent(id: number | null) {
 			onError: () => {},
 		}
 	)
-	
 	const jobItemContent = data?.jobItem
 	return {jobItemContent,isLoading,}
 }
