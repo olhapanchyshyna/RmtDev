@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useJobItemContent, useJobItems } from '../lib/hooks'
+import {useDebounce, useJobItems } from '../lib/hooks'
 import Background from './Background'
 import BookmarksButton from './BookmarksButton'
 import Container from './Container'
@@ -16,8 +16,9 @@ import SortingControls from './SortingControls'
 
 function App() {
 	const [searchText, setSearchText] = useState('')
-	const { jobItems, isLoadding, countItem } = useJobItems(searchText)  
-  useJobItemContent()
+ const debouncedValue = useDebounce(searchText, 300)
+ const { jobItems, isLoadding, countItem } = useJobItems(debouncedValue)  
+	
 
 	return (
 		<>
