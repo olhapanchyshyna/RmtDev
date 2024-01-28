@@ -23,44 +23,18 @@ export function useActiveId() {
 	return activeId
 }
 
-// export function useJobItemContent(){
-// 	const activeId = useActiveId()
-// 	const [jobItemContent, setJobItemContent] = useState<TJobItemContent | null>(null)
-// 	const [isLoading, setIsLoading] = useState(false)
+const fetchJobItemContent = async(id: number | null) => {
+	const response = await fetch(`${BASE_API_URL}/${id}`)
+	const data = await response.json()
+	return data
+}
 
-// 	useEffect(() => {
-// 		if (!activeId) return
-
-// 		const fetchData = async () => {
-// 			setIsLoading(true)
-// 			try {
-// 				const response = await fetch(`${BASE_API_URL}/${activeId}`)
-// 				const data = await response.json()
-//         setJobItemContent(data.jobItem)
-// 				setIsLoading(false)
-// 			} catch (error) {
-//         console.log(error)
-// 				setIsLoading(false)
-//       }
-// 		}
-// 		fetchData()
-// 	}, [activeId])
-
-// 	return {
-// 		jobItemContent,
-// 		isLoading
-// 	}
-// }
 
 export function useJobItemContent(id: number | null) {
 
 	const { data, isLoading } = useQuery(
 		['job-item', id],
-		async () => {
-			const response = await fetch(`${BASE_API_URL}/${id}`)
-			const data = await response.json()
-			return data
-		},
+		() => id ? fetchJobItemContent(id) : null,
 		{
 			staleTime: 1000 * 60 * 60,
 			refetchOnWindowFocus: false,
