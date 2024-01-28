@@ -17,8 +17,10 @@ import SortingControls from './SortingControls'
 function App() {
 	const [searchText, setSearchText] = useState('')
  const debouncedValue = useDebounce(searchText, 300)
- const { jobItems, isLoadding, countItem } = useJobItems(debouncedValue)  
+ const { jobItems, isLoadding } = useJobItems(debouncedValue)  
 	
+ const countItem = jobItems.length
+ const jobItemsSliced = jobItems.slice(0, 7)
 
 	return (
 		<>
@@ -39,7 +41,7 @@ function App() {
 						<ResultsCount countItem={countItem} />
 						<SortingControls />
 					</SidebarTop>
-					<JobList jobItems={jobItems} isLoadding={isLoadding} />
+					<JobList jobItemsSliced={jobItemsSliced} isLoadding={isLoadding} />
 					<PaginationControls />
 				</Sidebar>
 				<JobItemContent />

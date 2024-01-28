@@ -4,10 +4,10 @@ import JobListItem from './JobListItem'
 import Spinner from './Spinner'
 
 type JobListProps = {
-	jobItems: JobItems[]
+	jobItemsSliced: JobItems[]
 	isLoadding: boolean
 }
-export function JobList({ jobItems, isLoadding }: JobListProps) {
+export function JobList({ jobItemsSliced, isLoadding }: JobListProps) {
 	const activeId = useActiveId()
 
 	return (
@@ -15,7 +15,7 @@ export function JobList({ jobItems, isLoadding }: JobListProps) {
 			{isLoadding ? (
 				<Spinner />
 			) : (
-				jobItems.map(item => {
+				jobItemsSliced.map(item => {
 					return <JobListItem key={item.id} jobItems={item} isActive={item.id === activeId} />
 				})
 			)}
