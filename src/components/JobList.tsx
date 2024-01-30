@@ -5,14 +5,14 @@ import Spinner from './Spinner'
 
 type JobListProps = {
 	jobItemsSliced: JobItems[]
-	isLoadding: boolean
+	isLoading: boolean
 }
-export function JobList({ jobItemsSliced, isLoadding }: JobListProps) {
+export function JobList({ jobItemsSliced, isLoading }: JobListProps) {
 	const activeId = useActiveId()
 
 	return (
 		<ul className='job-list'>
-			{isLoadding ? (
+			{isLoading ? (
 				<Spinner />
 			) : (
 				jobItemsSliced.map(item => {
