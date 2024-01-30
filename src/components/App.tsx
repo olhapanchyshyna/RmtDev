@@ -14,6 +14,7 @@ import ResultsCount from './ResultsCount'
 import SearchForm from './SearchForm'
 import Sidebar, { SidebarTop } from './Sidebar'
 import SortingControls from './SortingControls'
+import { RESULTS_PER_PAGE } from '../lib/constants'
 
 function App() {
 	const [searchText, setSearchText] = useState('')
@@ -23,7 +24,7 @@ function App() {
 
 	const countItem = jobItems?.length || 0
 	const totalNumberOfPage = countItem / 7
-	const jobItemsSliced = jobItems?.slice(currentPage * 7 - 7, currentPage * 7) || []
+	const jobItemsSliced = jobItems?.slice(currentPage * RESULTS_PER_PAGE - RESULTS_PER_PAGE, currentPage * RESULTS_PER_PAGE) || []
 
 	const handleChangePage = (direction: 'next' | 'prev') => {
 		if(direction === 'next'){
