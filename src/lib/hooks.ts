@@ -2,11 +2,14 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { BASE_API_URL } from './constants'
 import { JobItems, TJobItemContent } from './types'
+import toast from 'react-hot-toast'
 
 type JobItemContentApiResponse = {
 	public: boolean
 	jobItem: TJobItemContent
 }
+
+// ---------------------------
 
 type JobItemApiResponse = {
 	public: boolean
@@ -49,7 +52,6 @@ const fetchJobItemContent = async (
 	return data
 }
 
-// ---------------------------
 
 export function useJobItemContent(id: number | null) {
 	const { data, isInitialLoading } = useQuery(
@@ -65,10 +67,10 @@ export function useJobItemContent(id: number | null) {
 			},
 		}
 	)
-	return { 
-		jobItemContent: data?.jobItem, 
-		isLoading : isInitialLoading
-	}  as const
+	return {
+		jobItemContent: data?.jobItem,
+		isLoading: isInitialLoading,
+	} as const
 }
 
 // ---------------------------
@@ -86,19 +88,18 @@ export function useDebounce<T>(value: T, delay = 350): T {
 	return debouncedValue
 }
 
+// --------------
 const fetchJobItems = async (
 	searchText: string
 ): Promise<JobItemApiResponse> => {
-	try {
-		const response = await fetch(`${BASE_API_URL}?search=${searchText}`)
-		const data = await response.json()
-		return data
-	} catch (error) {
-		console.log(error)
-		throw new Error('Failed to fetch job items')
+	const response = await fetch(`${BASE_API_URL}?search=${searchText}`)
+	if (!response.ok) {
+		const errorDate = await response.json()
+		throw new Error(errorDate.description)
 	}
+	const data = await response.json()
+	return data
 }
-
 
 export function useJobItems(searchText: string) {
 	const { data, isInitialLoading } = useQuery(
@@ -109,8 +110,8 @@ export function useJobItems(searchText: string) {
 			refetchOnWindowFocus: false,
 			retry: false,
 			enabled: Boolean(searchText),
-			onError: error => {
-				console.log(error)
+			onError: (error) => {
+				toast.error(error.message)
 			},
 		}
 	)
