@@ -43,8 +43,9 @@ function PaginationButton({
 	return (
 		<button
 			className='pagination__button'
-			onClick={() => {
+			onClick={(e) => {
 				onChangePage(direction)
+        e.currentTarget.blur()
 			}}
 		>
 			{direction === 'prev' ? (
