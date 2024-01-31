@@ -28,7 +28,7 @@ function App() {
 	const totalNumberOfPage = countItem / 7
 
 	const jobItemsSorted =
-		jobItems?.sort((a, b) => {
+		[...(jobItems || [])].sort((a, b) => {
 			if (sortBy === 'relevant') {
 				return b.relevanceScore - a.relevanceScore
 			} else {
@@ -40,7 +40,7 @@ function App() {
 		jobItemsSorted.slice(
 			currentPage * RESULTS_PER_PAGE - RESULTS_PER_PAGE,
 			currentPage * RESULTS_PER_PAGE
-		) || []
+		) 
 
 	const handleChangePage = (direction: PageDirection) => {
 		if (direction === 'next') {
