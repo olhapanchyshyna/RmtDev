@@ -19,4 +19,5 @@ export type TJobItemContent = JobItems & {
   companyURL: string;
 }
 
+export type PageDirection = 'next' | 'prev'
 export type SortBy = 'relevant' | 'resent'  
