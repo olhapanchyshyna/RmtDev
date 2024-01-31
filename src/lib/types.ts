@@ -18,3 +18,5 @@ export type TJobItemContent = JobItems & {
   coverImgURL: string;
   companyURL: string;
 }
+
+export type SortBy = 'relevant' | 'resent'  
