@@ -20,4 +20,4 @@ export type TJobItemContent = JobItems & {
 }
 
 export type PageDirection = 'next' | 'prev'
-export type SortBy = 'relevant' | 'resent'  
+export type SortBy = 'relevant' | 'recent'  
