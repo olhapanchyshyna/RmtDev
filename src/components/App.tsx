@@ -24,6 +24,7 @@ function App() {
 	const [currentPage, setCurrentPage] = useState(1)
 	const [sortBy, setSortBy] = useState<SortBy>('relevant')
 
+	// ---------
 	const countItem = jobItems?.length || 0
 	const totalNumberOfPage = countItem / 7
 
@@ -42,6 +43,9 @@ function App() {
 			currentPage * RESULTS_PER_PAGE
 		) 
 
+
+	// ---------
+
 	const handleChangePage = (direction: PageDirection) => {
 		if (direction === 'next') {
 			setCurrentPage(prev => prev + 1)
@@ -54,6 +58,8 @@ function App() {
 		setCurrentPage(1)
 		setSortBy(newSort)
 	}
+
+
 
 	return (
 		<>
