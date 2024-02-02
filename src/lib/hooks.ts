@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { BASE_API_URL } from './constants'
 import { JobItems, TJobItemContent } from './types'
 import { handleError } from './utils'
+import { BookmarksContext } from '../contexts/BookmarksContextProvider'
 
 type JobItemContentApiResponse = {
 	public: boolean
@@ -128,4 +129,19 @@ export function useLocalStorage<T>(key: string, initianValue: T) : [T, React.Dis
 	}, [value, key])
 
 	return [value, setValue] as const
+}
+
+
+
+// --------------------------------------------------------------------------
+
+export function useBookmarksContext(){
+	const context = useContext(BookmarksContext)
+
+	if(!context){
+		throw new Error(' useContext(BookmarksContext) must be used within a BookmarksContextProvider')
+	}
+
+	return context
+
 }

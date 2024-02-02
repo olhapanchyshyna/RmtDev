@@ -1,18 +1,19 @@
 import { ReactNode, createContext } from 'react'
 import { useLocalStorage } from '../lib/hooks'
 
-type BookmarksContextProviderProps = {
-	children: ReactNode
+
+type TBookmarksContext = {
+		bookmarkId: number[]
+		handleToogleBookmarkId: (id: number) => void
 }
 
-export const BookmarksContext = createContext(null)
+export const BookmarksContext = createContext<TBookmarksContext | null>(null)
 
 export default function BookmarksContextProvider({
 	children,
-}: BookmarksContextProviderProps) {
+}: {children: ReactNode}) {
 	const[bookmarkId, setBookmarkId] = useLocalStorage<number[]>('bookmarkId', [])
 	
-
 	const handleToogleBookmarkId = (id: number) => {
 		if (bookmarkId.includes(id)) {
 			setBookmarkId(prev => prev.filter(item => item !== id))
@@ -20,8 +21,6 @@ export default function BookmarksContextProvider({
 			setBookmarkId(prev => [...prev, id])
 		}
 	}
-
-	
 
 	return (
 		<BookmarksContext.Provider
@@ -34,3 +33,4 @@ export default function BookmarksContextProvider({
 		</BookmarksContext.Provider>
 	)
 }
+
