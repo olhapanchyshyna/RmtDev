@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { RESULTS_PER_PAGE } from '../lib/constants'
-import { useDebounce, useJobItems } from '../lib/hooks'
+import { useDebounce, useSearchQuery } from '../lib/hooks'
 import { PageDirection, SortBy } from '../lib/types'
 import Background from './Background'
 import BookmarksButton from './BookmarksButton'
@@ -20,7 +20,7 @@ import SortingControls from './SortingControls'
 function App() {
 	const [searchText, setSearchText] = useState('')
 	const debouncedValue = useDebounce(searchText, 300)
-	const { jobItems, isLoading } = useJobItems(debouncedValue)
+	const { jobItems, isLoading } = useSearchQuery(debouncedValue)
 	const [currentPage, setCurrentPage] = useState(1)
 	const [sortBy, setSortBy] = useState<SortBy>('relevant')
 
