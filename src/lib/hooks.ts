@@ -8,34 +8,12 @@ type JobItemContentApiResponse = {
 	public: boolean
 	jobItem: TJobItemContent
 }
-
 // ---------------------------
 
 type JobItemApiResponse = {
 	public: boolean
 	sorted: boolean
 	jobItems: JobItems[]
-}
-// ---------------------------
-
-export function useActiveId() {
-	const [activeId, setActiveId] = useState<number | null>(null)
-
-	useEffect(() => {
-		const handleHashChange = () => {
-			const id = +window.location.hash.slice(1)
-			setActiveId(id)
-		}
-		handleHashChange()
-
-		window.addEventListener('hashchange', handleHashChange)
-
-		return () => {
-			window.removeEventListener('hashchange', handleHashChange)
-		}
-	}, [])
-
-	return activeId
 }
 
 // ---------------------------
@@ -52,7 +30,6 @@ const fetchJobItemContent = async (
 	return data
 }
 
-
 export function useJobItemContent(id: number | null) {
 	const { data, isInitialLoading } = useQuery(
 		['job-item', id],
@@ -62,7 +39,7 @@ export function useJobItemContent(id: number | null) {
 			refetchOnWindowFocus: false,
 			retry: false,
 			enabled: Boolean(id),
-			onError: handleError
+			onError: handleError,
 		}
 	)
 	return {
@@ -108,7 +85,7 @@ export function useJobItems(searchText: string) {
 			refetchOnWindowFocus: false,
 			retry: false,
 			enabled: Boolean(searchText),
-			onError: handleError
+			onError: handleError,
 		}
 	)
 
@@ -116,4 +93,39 @@ export function useJobItems(searchText: string) {
 		jobItems: data?.jobItems,
 		isLoading: isInitialLoading,
 	} as const
+}
+
+// ---------------------------
+
+export function useActiveId() {
+	const [activeId, setActiveId] = useState<number | null>(null)
+
+	useEffect(() => {
+		const handleHashChange = () => {
+			const id = +window.location.hash.slice(1)
+			setActiveId(id)
+		}
+		handleHashChange()
+
+		window.addEventListener('hashchange', handleHashChange)
+
+		return () => {
+			window.removeEventListener('hashchange', handleHashChange)
+		}
+	}, [])
+
+	return activeId
+}
+
+export function useLocalStorage<T>(key: string, initianValue: T) : [T, React.Dispatch<React.SetStateAction<T>>] {
+
+	const [value, setValue] = useState(
+		JSON.parse(localStorage.getItem(key) || JSON.stringify(initianValue))
+	)
+
+	useEffect(() => {
+		localStorage.setItem(key, JSON.stringify(value))
+	}, [value, key])
+
+	return [value, setValue] as const
 }
