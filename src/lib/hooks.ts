@@ -91,15 +91,15 @@ export function useJobItems(ids: number[]) {
 	})
 
 	const jobItems = results
-		.map((item) => item.data?.jobItem)
+		.map(item => item.data?.jobItem)
 		// .filter((item) => item !== undefined)
-		.filter((item) => Boolean(item)) as TJobItemContent[]
+		.filter(item => Boolean(item)) as TJobItemContent[]
 
-	const isLoading =  results.some((results) => results.isLoading)	
-	
+	const isLoading = results.some(results => results.isLoading)
+
 	return {
 		jobItems,
-		isLoading
+		isLoading,
 	}
 }
 
@@ -157,6 +157,23 @@ export function useLocalStorage<T>(
 	}, [value, key])
 
 	return [value, setValue] as const
+}
+
+export function useOnClickOutside(
+	refs: React.RefObject<HTMLElement>[],
+	handle: () => void
+) {
+	useEffect(() => {
+		const handleClick = (e: MouseEvent) => {
+			if (refs.every(ref => !ref.current?.contains(e.target as Node))) {
+				handle()
+			}
+		}
+		document.addEventListener('click', handleClick)
+		return () => {
+			document.removeEventListener('click', handleClick)
+		}
+	}, [refs, handle])
 }
 
 // --------------------------------------------------------------------------
