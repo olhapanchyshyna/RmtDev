@@ -92,7 +92,8 @@ export function useJobItems(ids: number[]) {
 
 	const jobItems = results
 		.map((item) => item.data?.jobItem)
-		.filter((item) => item !== undefined)
+		// .filter((item) => item !== undefined)
+		.filter((item) => Boolean(item)) as TJobItemContent[]
 
 	const isLoading =  results.some((results) => results.isLoading)	
 	
