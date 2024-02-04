@@ -4,6 +4,7 @@ import { BookmarksContext } from '../contexts/BookmarksContextProvider'
 import { BASE_API_URL } from './constants'
 import { JobItems, TJobItemContent } from './types'
 import { handleError } from './utils'
+import { ActiveIdContext } from '../contexts/ActiveIdContextProvider'
 
 type JobItemContentApiResponse = {
 	public: boolean
@@ -187,5 +188,16 @@ export function useBookmarksContext() {
 		)
 	}
 
+	return context
+}
+
+export function useActiveIdContext() {
+	const context = useContext(ActiveIdContext)
+
+	if (!context) {
+		throw new Error(
+			' useContext(ActiveIdContext) must be used within a ActiveIdContextProvider'
+		)
+	}
 	return context
 }
