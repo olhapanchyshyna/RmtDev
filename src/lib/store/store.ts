@@ -1,6 +1,6 @@
 import { create } from 'zustand'
-import { JobItems, PageDirection, SortBy } from '../types'
 import { RESULTS_PER_PAGE } from '../constants'
+import { JobItems, PageDirection, SortBy } from '../types'
 
 type Store = {
 	searchText: string
@@ -16,8 +16,8 @@ type Store = {
 	setChangeSortBy: (newSort: SortBy) => void
 	setCountItem: (jobItems: JobItems[] | undefined) => void
 	setTotalNumberOfPage: () => void
-	setJobItemsSorted : (jobItems : JobItems[] | undefined) => void
-	setJobItemsSortedAndSliced : () => void
+	setJobItemsSorted: (jobItems: JobItems[] | undefined) => void
+	setJobItemsSortedAndSliced: () => void
 }
 
 export const useFeedbackItemsStore = create<Store>((set, get) => ({
@@ -30,14 +30,12 @@ export const useFeedbackItemsStore = create<Store>((set, get) => ({
 	jobItemsSorted: [],
 	jobItemsSortedAndSliced: [],
 
-	setSearchText: (value) => {
+	setSearchText: value => {
 		set({
 			searchText: value,
 		})
 	},
-
-	setChangePage: (direction) => {
-		
+	setChangePage: direction => {
 		if (direction === 'next') {
 			set(prev => ({
 				currentPage: prev.currentPage + 1,
@@ -47,49 +45,49 @@ export const useFeedbackItemsStore = create<Store>((set, get) => ({
 				currentPage: prev.currentPage - 1,
 			}))
 		}
-		console.log(get().currentPage)
 	},
 
-	setChangeSortBy: (newSort) => {
+	setChangeSortBy: newSort => {
 		set({
 			currentPage: 1,
 			sortBy: newSort,
 		})
 	},
 
-	setCountItem: (jobItems) => {
+	setCountItem: jobItems => {
 		set({
-			countItem: jobItems?.length || 0
+			countItem: jobItems?.length || 0,
 		})
 	},
 
 	setTotalNumberOfPage: () => {
 		const state = get()
 		set({
-			totalNumberOfPage: state.countItem / 7
+			totalNumberOfPage: state.countItem / 7,
 		})
 	},
 
-	setJobItemsSorted : (jobItems) => {
+	setJobItemsSorted: jobItems => {
 		const state = get()
 		set({
-			jobItemsSorted: [...(jobItems || [])].sort((a, b) => {
-				if (state.sortBy === 'relevant') {
-					return b.relevanceScore - a.relevanceScore
-				} else {
-					return a.daysAgo - b.daysAgo
-				}
-			}) || []
+			jobItemsSorted:
+				[...(jobItems || [])].sort((a, b) => {
+					if (state.sortBy === 'relevant') {
+						return b.relevanceScore - a.relevanceScore
+					} else {
+						return a.daysAgo - b.daysAgo
+					}
+				}) || [],
 		})
 	},
 
-	setJobItemsSortedAndSliced : () => {
+	setJobItemsSortedAndSliced: () => {
 		const state = get()
 		set({
 			jobItemsSortedAndSliced: state.jobItemsSorted.slice(
 				state.currentPage * RESULTS_PER_PAGE - RESULTS_PER_PAGE,
 				state.currentPage * RESULTS_PER_PAGE
-			)
+			),
 		})
-	}
+	},
 }))

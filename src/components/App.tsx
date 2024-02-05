@@ -50,7 +50,7 @@ function App() {
 				</Sidebar>
 
 				<JobItemContent />
-				
+
 			</Container>
 
 			<Footer />
