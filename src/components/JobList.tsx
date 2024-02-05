@@ -7,8 +7,8 @@ type JobListProps = {
 	jobItemsSliced: JobItems[]
 	isLoading: boolean
 }
-export function JobList({ jobItemsSliced, isLoading }: JobListProps) {
-	const {activeId} =useActiveIdContext()
+export function JobList({jobItemsSliced, isLoading }: JobListProps) {
+	const {activeId} = useActiveIdContext()
 
 	return (
 		<ul className='job-list'>

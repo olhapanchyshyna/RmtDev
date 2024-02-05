@@ -1,10 +1,7 @@
-type SearchFormProps = {
-  searchText: string
-  setSearchText: React.Dispatch<React.SetStateAction<string>>
-}
+import { useFeedbackItemsStore } from '../lib/store/store'
 
-export default function SearchForm({searchText, setSearchText}: SearchFormProps) {
-
+export default function SearchForm() {
+	const { searchText, setSearchText } = useFeedbackItemsStore()
 	return (
 		<form
 			onSubmit={e => {

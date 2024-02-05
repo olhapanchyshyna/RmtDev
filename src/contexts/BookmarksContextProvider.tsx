@@ -2,8 +2,6 @@ import { ReactNode, createContext } from 'react'
 import {  useJobItems, useLocalStorage } from '../lib/hooks'
 import {TJobItemContent } from '../lib/types'
 
-
-
 type TBookmarksContext = {
 		bookmarkId: number[]
 		handleToogleBookmarkId: (id: number) => void

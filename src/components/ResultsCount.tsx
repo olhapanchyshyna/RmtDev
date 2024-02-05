@@ -1,7 +1,7 @@
-type resultsCountProps = {
-	countItem: number
-}
-export default function ResultsCount({ countItem }: resultsCountProps) {
+import { useFeedbackItemsStore } from '../lib/store/store'
+
+export default function ResultsCount() {
+	const {countItem} = useFeedbackItemsStore()
 	return (
 		<p className='count'>
 			<span className='u-bold'>{countItem}</span> results

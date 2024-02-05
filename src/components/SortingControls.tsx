@@ -1,33 +1,29 @@
 import { ReactNode } from 'react'
-import { SortBy } from '../lib/types'
-
-type SortingControlsProps = {
-	handleChangeSortBy: (newSort: SortBy) => void
-	sortBy: SortBy
-}
+import { useFeedbackItemsStore } from '../lib/store/store'
 
 type SortingButtonProps = {
-	handleChangeSortBy: () => void
+	setChangeSortBy: () => void
 	children: ReactNode
 	isActive: boolean
 }
 
-export default function SortingControls({
-	handleChangeSortBy,
-	sortBy,
-}: SortingControlsProps) {
+export default function SortingControls() {
+
+  const { sortBy, setChangeSortBy } = useFeedbackItemsStore()
+
 	return (
     <section className="sorting">
       <i className="fa-solid fa-arrow-down-short-wide"></i>
 
       <SortingButton
-        handleChangeSortBy={() => handleChangeSortBy("relevant")}
+        setChangeSortBy={() => setChangeSortBy("relevant")}
         isActive={sortBy === "relevant"}
       >
         Relevant
       </SortingButton>
+      
       <SortingButton
-        handleChangeSortBy={() => handleChangeSortBy("recent")}
+        setChangeSortBy={() => setChangeSortBy("recent")}
         isActive={sortBy === "recent"}
       >
         Recent
@@ -37,10 +33,10 @@ export default function SortingControls({
 }
 
 
-function SortingButton({ children, handleChangeSortBy, isActive }: SortingButtonProps) {
+function SortingButton({ children, setChangeSortBy, isActive }: SortingButtonProps) {
   return (
     <button
-      onClick={handleChangeSortBy}
+      onClick={setChangeSortBy}
       className={`sorting__button sorting__button--recent ${
         isActive ? "sorting__button--active" : ""
       }`}

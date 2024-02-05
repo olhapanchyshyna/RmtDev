@@ -1,52 +1,52 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons'
+import { useFeedbackItemsStore } from '../lib/store/store'
 import { PageDirection } from '../lib/types'
 
-type PaginationControlsProps = {
-	onChangePage: (direction: PageDirection) => void
-	currentPage: number
-  totalNumberOfPage: number
-}
 type PaginationButtonProps = {
-	onChangePage: (direction: PageDirection) => void
+	setChangePage: (direction: PageDirection) => void
 	currentPage: number
 	direction: PageDirection
 }
 
-export default function PaginationControls({
-	onChangePage,
-	currentPage,
-  totalNumberOfPage
-}: PaginationControlsProps) {
+export default function PaginationControls() {
+	const { currentPage, setChangePage, totalNumberOfPage } =
+		useFeedbackItemsStore()
 	return (
 		<section className='pagination'>
-      {currentPage > 1 ? <PaginationButton
-				onChangePage={onChangePage}
-				currentPage={currentPage}
-				direction='prev'
-			/> : <button/>}
-			
-      {currentPage <= totalNumberOfPage ? <PaginationButton
-				onChangePage={onChangePage}
-				currentPage={currentPage}
-				direction='next'
-			/>: <button/>}
+			{currentPage > 1 ? (
+				<PaginationButton
+					setChangePage={setChangePage}
+					currentPage={currentPage}
+					direction='prev'
+				/>
+			) : (
+				<button />
+			)}
 
-			
+			{currentPage <= totalNumberOfPage ? (
+				<PaginationButton
+					setChangePage={setChangePage}
+					currentPage={currentPage}
+					direction='next'
+				/>
+			) : (
+				<button />
+			)}
 		</section>
 	)
 }
 
 function PaginationButton({
-	onChangePage,
+	setChangePage,
 	currentPage,
 	direction,
 }: PaginationButtonProps) {
 	return (
 		<button
 			className='pagination__button'
-			onClick={(e) => {
-				onChangePage(direction)
-        e.currentTarget.blur()
+			onClick={e => {
+				setChangePage(direction)
+				e.currentTarget.blur()
 			}}
 		>
 			{direction === 'prev' ? (
@@ -62,7 +62,6 @@ function PaginationButton({
 					<ArrowRightIcon />
 				</>
 			) : null}
-
 		</button>
 	)
 }
