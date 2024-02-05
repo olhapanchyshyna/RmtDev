@@ -4,6 +4,9 @@ import { BookmarksContext } from '../contexts/BookmarksContextProvider'
 import { BASE_API_URL } from './constants'
 import { JobItems, TJobItemContent } from './types'
 import { handleError } from './utils'
+import { ActiveIdContext } from '../contexts/ActiveIdContextProvider'
+import { SearchTextContext } from '../contexts/SearchTextContextProvider'
+import { JobItemsContext } from '../contexts/JobItemsContextProvider'
 
 type JobItemContentApiResponse = {
 	public: boolean
@@ -189,4 +192,34 @@ export function useBookmarksContext() {
 	}
 
 	return context
+}
+
+export function useActiveIdContext() {
+  const context = useContext(ActiveIdContext);
+  if (!context) {
+    throw new Error(
+      "useActiveIdContext must be used within a ActiveIdContextProvider"
+    );
+  }
+  return context;
+}
+
+export function useSearchTextContext() {
+  const context = useContext(SearchTextContext);
+  if (!context) {
+    throw new Error(
+      "useSearchTextContext must be used within a SearchTextContextProvider"
+    );
+  }
+  return context;
+}
+
+export function useJobItemsContext() {
+  const context = useContext(JobItemsContext);
+  if (!context) {
+    throw new Error(
+      "useJobItemsContext must be used within a JobItemsContextProvider"
+    );
+  }
+  return context;
 }

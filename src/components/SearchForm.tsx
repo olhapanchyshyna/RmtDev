@@ -1,7 +1,7 @@
-import { useFeedbackItemsStore } from '../lib/store/store'
+import { useSearchTextContext } from '../lib/hooks'
 
 export default function SearchForm() {
-	const { searchText, setSearchText } = useFeedbackItemsStore()
+	const { searchText, setSearchText } = useSearchTextContext()
 	return (
 		<form
 			onSubmit={e => {
