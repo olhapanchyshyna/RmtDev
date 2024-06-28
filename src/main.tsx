@@ -13,15 +13,15 @@ const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
-			<BookmarksContextProvider>
-				<ActiveIdContextProvider>
-					<JobItemsContextProvider>
-						<SearchTextContextProvider>
-							<App />
-						</SearchTextContextProvider>
-					</JobItemsContextProvider>
-				</ActiveIdContextProvider>
-			</BookmarksContextProvider>
+		<BookmarksContextProvider>
+        <ActiveIdContextProvider>
+          <SearchTextContextProvider>
+            <JobItemsContextProvider>
+              <App />
+            </JobItemsContextProvider>
+          </SearchTextContextProvider>
+        </ActiveIdContextProvider>
+      </BookmarksContextProvider>
 		</QueryClientProvider>
 	</React.StrictMode>
 )

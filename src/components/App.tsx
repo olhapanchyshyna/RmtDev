@@ -4,9 +4,9 @@ import Container from './Container'
 import Footer from './Footer'
 import Header from './Header'
 import JobItemContent from './JobItemContent'
-import JobList from './JobList'
 import PaginationControls from './PaginationControls'
 import Sidebar, { SidebarTop } from './Sidebar'
+import JobListSearch from './JobListSearch'
 
 function App() {
 	
@@ -21,10 +21,7 @@ function App() {
 
 				<Sidebar>
 					<SidebarTop />
-					<JobList
-						jobItemsSliced={jobItemsSortedAndSliced}
-						isLoading={isLoading}
-					/>
+					<JobListSearch/>
 					<PaginationControls />
 				</Sidebar>
 

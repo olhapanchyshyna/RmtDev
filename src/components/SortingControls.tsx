@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
-import { useFeedbackItemsStore } from '../lib/store/store'
+import { useJobItemsContext } from '../lib/hooks'
+
 
 type SortingButtonProps = {
 	setChangeSortBy: () => void
@@ -9,21 +10,21 @@ type SortingButtonProps = {
 
 export default function SortingControls() {
 
-  const { sortBy, setChangeSortBy } = useFeedbackItemsStore()
+  const { sortBy, handleChangeSortBy } = useJobItemsContext()
 
 	return (
     <section className="sorting">
       <i className="fa-solid fa-arrow-down-short-wide"></i>
 
       <SortingButton
-        setChangeSortBy={() => setChangeSortBy("relevant")}
+        setChangeSortBy={() => handleChangeSortBy("relevant")}
         isActive={sortBy === "relevant"}
       >
         Relevant
       </SortingButton>
       
       <SortingButton
-        setChangeSortBy={() => setChangeSortBy("recent")}
+        setChangeSortBy={() => handleChangeSortBy("recent")}
         isActive={sortBy === "recent"}
       >
         Recent
